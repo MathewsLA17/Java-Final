@@ -1,1 +1,4 @@
-this is for the final project to share info
+This is for the final project to share info.
+
+-If you need to share info, you can use this file to type something out
+-Please, when adding code or any sort of change to code. use comments (//) to communicate what you changed so that we can make sure to work well as a team. 
