@@ -1,67 +1,58 @@
-import java.io.*; 
-//broken currently doesn't run just wanted to get my idea in here
-// Since each type has a differnt type of stuff we're looking for thought we could use switch statements looking for the frist thing 
-//track album etc,  then startparsing up from there based on the csv file because it's different in the csv file for each category
-//
-public class Filereader{
+import java.io.*;
 
-    static ArrayList<Media> readMediaFromFile(String path){
-    ArrayList<Media> list = new ArrayList<>(); 
-    
-    try(BufferedReader reader = new BufferedRader(new FileReader(path))){
-    
-     
-    for(int i =0 ; i< numbooks; i++){
-    String[] columns = linesplit(","); 
-    String line = reader.readLine(); 
-    switch(media.toLowerCase()){
-    
-    case "track": 
-    {
-       
-    String Title = columns[1].trim();
-    String Creator = columns[2].trim();
-    String Album = columns[3].trim();
-    int Year = Integer.parseInt(columns[3].trim());
-    int Duration  = Integer.parseInt(columns[4].trim());
-    double Rating  = double.parsedouble(columns[5].trim());
-    list.add(new track(Tile, Creator, Album, Year, Duration, Rating));
-    break; 
+public class FIleReader {
+    public static int getLineCount(String path) throws IOException{
+        int lineCount = 0;
+        File file = new File(path);
+        try(BufferedReader reader = new BufferedReader(new FileReader(path))){
+            while(reader.readLine() != null) {
+                lineCount++;
+            }
+        }catch (IOException e){
+            throw e;
+        }
+        return lineCount++;
     }
-    case "TVEpisode": 
-    {
-    String Title = columns[1].trim();
-    String Show Title = columns[2].trim();
-    String Creator = columns[3].trim();
-    int Year = Integer.parseInt(columns[3].trim());
-    int Season   = Integer.parseInt(columns[4].trim());
-    int Episode    = Integer.parseInt(columns[4].trim());
-    double Duration   = double.parsedouble(columns[5].trim());
-    int Season   = Integer.parseInt(columns[5].trim()); 
-    list.add(new track(Tile, Creator, Year, Season, Episode, Duration, Season));
-    break; 
-    }
-    case "AudioBook": 
-    {
-    String Title = columns[1].trim();
-    String Creator = columns[2].trim();
-    String Year = columns[3].trim();
-    int Duration  = Integer.parseInt(columns[4].trim());
-    String Rating  = columns[1].trim(); 
-    list.add(new track(Tile, Creator, Year, Duration, Rating));
-    break;
-    }
-    }
-    
-    ArrayList[i] = new LibraryStorage(Title, Author, Genre, pages, year, checkedOut);
-    }
-    
-    }
-    catch (IOExecption e){
-    throw e; 
-    }
-    return ArrayList; 
-    }
+    static Track[] readFile(String path) throws IOException{
+        int num = getLineCount(path) -1;
+        Track[] track = new Track[num];
 
+        try(BufferedReader reader =  new BufferedReader(new FileReader(path))){
+            String line = reader.readLine();
+            for (int i = 0; i < num; i++) {
+                line = reader.readLine();
+                String[] columns = line.split(",");
+                String title = columns[0];
+                String creator = columns[1];
+                String album = columns[2];
+                int year = Integer.parseInt(columns[3]);
+                int duration = Integer.parseInt((columns[4]));
+                String rating = columns[5];
+
+                track[i] = new Track(title, creator, album, year, duration, rating);
+
+            }
+        }
+    return track;
+    }
+    static void fileWrite(Track[] media, String path) throws IOException{
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(path))){
+            writer.write("Title, Creator, Album, Year, Duration, Rating");
+            writer.newLine();
+
+            for (int i = 0; i < media.length; i++) {
+                writer.write("%s, %s, %s, %d, %d, %T");
+                media[i].getTitle();
+                media[i].getCreator();
+                media[i].getAlbum();
+                media[i].getYear();
+                media[i].getDuration();
+                media[i].getRating();
+
+            }
+        }catch (IOException e){
+            throw e;
+        }
+    }
 }
     
