@@ -3,7 +3,7 @@ import java.io.*;
 // Since each type has a differnt type of stuff we're looking for thought we could use switch statements looking for the frist thing 
 //track album etc,  then startparsing up from there based on the csv file because it's different in the csv file for each category
 //
-public class filereader{
+public class Filereader{
 
     static ArrayList<Media> readMediaFromFile(String path){
     ArrayList<Media> list = new ArrayList<>(); 
