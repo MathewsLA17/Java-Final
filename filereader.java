@@ -1,63 +1,80 @@
-import java.io.BufferedWriter;
+package d;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.File;
 
-public class FIleReader {
-    public static int getLineCount(String path) throws IOException{
-        int lineCount = 0;
-        File file = new File(path);
-        try(BufferedReader reader = new BufferedReader(new FileReader(path))){
-            while(reader.readLine() != null) {
-                lineCount++;
+public class filereader {
+
+    public static int numLines(String path) throws IOException {
+        int count = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            while (reader.readLine() != null) {
+                count++;
             }
-        }catch (IOException e){
-            throw e;
         }
-        return lineCount++;
+        return count;
     }
-    static Track[] readFile(String path) throws IOException{
-        int num = getLineCount(path) -1;
-        Track[] track = new Track[num];
 
-        try(BufferedReader reader =  new BufferedReader(new FileReader(path))){
-            String line = reader.readLine();
-            for (int i = 0; i < num; i++) {
-                line = reader.readLine();
-                String[] columns = line.split(",");
-                String title = columns[0];
-                String creator = columns[1];
-                String album = columns[2];
-                int year = Integer.parseInt(columns[3]);
-                int duration = Integer.parseInt((columns[4]));
-                String rating = columns[5];
+    static Track[] readFile(String path) throws IOException {
 
-                track[i] = new Track(title, creator, album, year, duration, rating);
+        int total = numLines(path) - 1;
+        Track[] loadedTracks = new Track[total];
 
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+
+            String row = reader.readLine();
+
+            for (int i = 0; i < total; i++) {
+
+                row = reader.readLine();
+                if (row == null) break;
+
+                String[] parts = row.split(",");
+
+                String mediaType = parts[0].trim();
+                String title = parts[1].trim();
+                String creator = parts[2].trim();
+                String album = parts[3].trim();
+                String showTitle = parts[4].trim();
+                int year = Integer.parseInt(parts[5].trim());
+                String seasonStr = parts[6].trim();
+                String episodeStr = parts[7].trim();
+                int duration = Integer.parseInt(parts[8].trim());
+                String rating = parts[9].trim();
+
+                if (mediaType.equals("Track")) {
+
+                    loadedTracks[i] = new Track(
+                            title, creator, album,
+                            year, duration, rating
+                    );
+
+                } else if (mediaType.equals("AudioBook")) {
+
+                    loadedTracks[i] = new AudioBook(
+                            title, creator, album,
+                            year, duration, rating
+                    );
+
+                } else if (mediaType.equals("TVEpisode")) {
+
+                    int seasonNum = Integer.parseInt(seasonStr);
+                    int episodeNum = Integer.parseInt(episodeStr);
+
+                    TVEpisode episode = new TVEpisode(
+                            title, creator, showTitle,
+                            year, duration, rating
+                    );
+
+                    episode.setSeasonNumber(seasonNum);
+                    episode.setEpisodeNumber(episodeNum);
+
+                    loadedTracks[i] = episode;
+                }
             }
         }
-    return track;
-    }
-    static void fileWrite(Track[] media, String path) throws IOException{
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(path))){
-            writer.write("Title, Creator, Album, Year, Duration, Rating");
-            writer.newLine();
 
-            for (int i = 0; i < media.length; i++) {
-                writer.write("%s, %s, %s, %d, %d, %T");
-                media[i].getTitle();
-                media[i].getCreator();
-                media[i].getAlbum();
-                media[i].getYear();
-                media[i].getDuration();
-                media[i].getRating();
-
-            }
-        }catch (IOException e){
-            throw e;
-        }
+        return loadedTracks;
     }
 }
-    

@@ -1,0 +1,29 @@
+package d;
+
+class TVEpisode<T> extends Track<T> {
+
+    private int seasonNumber;
+    private int episodeNumber;
+
+    public TVEpisode(String title, String creator, String showTitle,
+                     int year, int duration, T rating) {
+
+        super(title, creator, showTitle, year, duration, rating);
+    }
+
+    public void setSeasonNumber(int seasonNumber) {
+        this.seasonNumber = seasonNumber;
+    }
+
+    public int getSeasonNumber() {
+        return seasonNumber;
+    }
+
+    public void setEpisodeNumber(int episodeNumber) {
+        this.episodeNumber = episodeNumber;
+    }
+
+    public int getEpisodeNumber() {
+        return episodeNumber;
+    }
+}
