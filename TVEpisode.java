@@ -4,7 +4,7 @@ class TVEpisode<T> extends Track<T> {
 
     private int seasonNumber;
     private int episodeNumber;
-
+//Duration duration
     public TVEpisode(String title, String creator, String showTitle,
                      int year, int duration, T rating) {
 

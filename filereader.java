@@ -3,6 +3,7 @@ package d;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.duration;
 
 public class filereader {
 
@@ -40,7 +41,9 @@ public class filereader {
                 int year = Integer.parseInt(parts[5].trim());
                 String seasonStr = parts[6].trim();
                 String episodeStr = parts[7].trim();
+                //change duration to durationMinutes;
                 int duration = Integer.parseInt(parts[8].trim());
+                //Duration duration = Duration.ofMinutes(durationMinutes);
                 String rating = parts[9].trim();
 
                 if (mediaType.equals("Track")) {

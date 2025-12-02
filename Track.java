@@ -1,13 +1,17 @@
 package d;
+//import java.time.duration
+
 
 class Track <T>{
     private String title;
     private String creator;
     private String album;
     private int year;
+    // private Duration duration;
     private int duration;
     private T rating;
 
+    //Duration duration;
     public Track (String title, String creator, String album, int year, int duration, T rating){
         this.title = title;
         this.creator = creator;
@@ -40,9 +44,11 @@ class Track <T>{
     public void setYear(int year){
         this.year = year;
     }
+    // public Duration getDuration(){
     public int getDuration(){
     return duration;
     }
+    // Duration duration;
     public void setDuration(int duration){
         this.duration = duration;
     }

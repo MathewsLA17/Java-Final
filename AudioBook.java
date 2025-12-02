@@ -3,6 +3,8 @@ package d;
 
 class AudioBook<T> extends Track<T> {
 
+    //public Duration duration
+
     public AudioBook(String title, String creator, String album, int year, int duration, T rating) {
         super(title, creator, album, year, duration, rating);
     }
