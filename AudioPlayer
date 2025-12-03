@@ -1,0 +1,30 @@
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
+public class AudioPlayer {
+
+    public void play(String filePath) {
+        try {
+            File audioFile = new File(filePath);
+            if (!audioFile.exists()) {
+                System.out.println("File NOT FOUND: " + audioFile.getAbsolutePath());
+                return;
+            } else {
+                System.out.println("Found file: " + audioFile.getAbsolutePath());
+            }
+
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+
+            System.out.println("Playing audio: " + filePath);
+
+        } catch (Exception e) {
+            System.out.println("Error playing the audio: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}
