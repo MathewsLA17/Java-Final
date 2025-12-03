@@ -1,0 +1,192 @@
+import javax.sound.sampled.Clip;
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.io.File;
+
+public class SpotifyGui extends JFrame {
+    private ArrayList<Track<String>> all;
+    private JTextArea outputArea;
+    private JButton playButton;
+    private JButton pauseButton;
+    private JButton chooseButton;
+    private JButton loopButton;
+    private boolean isPaused;
+    private boolean isLooping = false;
+    private JFileChooser fileChooser;
+    private Clip clip;
+
+
+
+
+    public SpotifyGui(ArrayList<Track<String>> all) {
+        this.all = all;
+        setTitle("Better Spotify");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        ImageIcon icon = new ImageIcon("BetterLogo.png");
+        setIconImage(icon.getImage());
+
+        outputArea = new JTextArea();
+        outputArea.setEditable(false);
+        outputArea.setFont(new Font("DilogInput", Font.ITALIC, 13));
+
+        JScrollPane scrollPane = new JScrollPane(outputArea);
+        add(scrollPane, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 5, 5, 5));
+        JButton pa = new JButton("Print all entries");
+        JButton pt = new JButton("Print all Tracks");
+        JButton pAB = new JButton("Print only Audio Books");
+        JButton pTV = new JButton("Print only TV Episodes");
+        JButton pCr = new JButton("Print all by creator");
+        JButton sortR = new JButton("Sort by rating");
+        JButton sortY = new JButton("Sort by year");
+        JButton sortT = new JButton("Sort by title");
+        JButton pAfterYear = new JButton("Print all entries released after given year");
+        JButton play = new JButton("Play selected track");
+        JButton quit = new JButton("Quit");
+
+
+        buttonPanel.add(pa);
+        buttonPanel.add(pt);
+        buttonPanel.add(pAB);
+        buttonPanel.add(pTV);
+        buttonPanel.add(pCr);
+        buttonPanel.add(sortR);
+        buttonPanel.add(sortY);
+        buttonPanel.add(sortT);
+        buttonPanel.add(pAfterYear);
+        buttonPanel.add(play);
+        buttonPanel.add(quit);
+        add(buttonPanel, BorderLayout.SOUTH);
+
+
+        pa.addActionListener(a -> printAll());
+        pt.addActionListener(b -> printTracks());
+        pAB.addActionListener(c -> printAudioBooks());
+        pTV.addActionListener(d -> printTVEpisodes());
+        pCr.addActionListener(e -> printAllByCreator());
+        sortR.addActionListener(f -> sortByRating());
+        sortY.addActionListener(g -> sortByYear());
+        sortT.addActionListener(h -> sortByTitle());
+        play.addActionListener(e -> playAudio());
+        pAfterYear.addActionListener(i -> printAfterYear());
+
+        quit.addActionListener(j -> System.exit(0));
+
+
+    }
+
+
+    private void printAll() {
+        StringBuilder sb = new StringBuilder();
+        for (Track<String> t : all) {
+            sb.append("Title:").append(t.getTitle()).append(" Artist:")
+                    .append(t.getCreator()).append(" Album:")
+                    .append(t.getAlbum()).append(" Year:")
+                    .append(t.getYear()).append(" Duration:")
+                    .append(t.getDuration()).append(" Rating:")
+                    .append(t.getRating()).append(" ").append("\n");
+        }
+        outputArea.setText(sb.toString());
+    }
+
+    private void printTracks() {
+        outputArea.setText("");
+        all.stream().filter(t -> t.getClass().getSimpleName()
+                .equals("Track")).forEach(t -> outputArea.append(t.getTitle() + " " + t.getCreator() + "\n"));
+    }
+
+    private void printAudioBooks() {
+        outputArea.setText("");
+        all.stream().filter(t -> t instanceof AudioBook)
+                .forEach(t -> outputArea.append(t.getTitle() + " " + t.getCreator() + "\n"));
+
+    }
+
+    private void printTVEpisodes() {
+        outputArea.setText("");
+        all.stream().filter(t -> t instanceof TVEpisode)
+                .forEach(t ->
+                        outputArea.append(t.getTitle() + "  " + t.getCreator() + "\n"));
+    }
+
+    private void printAllByCreator() {
+        String creator = JOptionPane.showInputDialog(this, "Creator");
+
+        String s = creator.trim().toLowerCase();
+        outputArea.setText("");
+        all.stream()
+                .filter(t -> t.getCreator().toLowerCase().equals(s))
+                .forEach(t ->
+                        outputArea.append(t.getTitle() + "  " + t.getCreator() + "\n")
+                );
+    }
+
+    private void sortByRating() {
+        all.sort((a, b) -> b.getRating().toString().compareTo(a.getRating().toString()));
+        printAll();
+    }
+
+    private void sortByYear() {
+
+        all.sort((a, b) -> Integer.compare(a.getYear(), b.getYear()));
+        printAll();
+    }
+
+    private void sortByTitle() {
+
+        all.sort((a, b) -> a.getTitle().compareToIgnoreCase(b.getTitle()));
+
+    }
+
+    private void printAfterYear() {
+        String input = JOptionPane.showInputDialog(this, "Minimum year:");
+        if (input == null || input.trim().isEmpty()) return;
+
+        int minYear;
+        try {
+            minYear = Integer.parseInt(input.trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid year.");
+            return;
+        }
+
+        outputArea.setText("");
+
+        all.stream()
+                .filter(t -> t.getYear() >= minYear)
+                .forEach(t -> outputArea.append(
+                        "Title: " + t.getTitle() + "\n" +
+                                "Artist: " + t.getCreator() + "\n" +
+                                "Album: " + t.getAlbum() + "\n" +
+                                "Year: " + t.getYear() + "\n" +
+                                "Duration: " + t.getDuration() + " minutes\n" +
+                                "Rating: " + t.getRating() + "\n" +
+                                "\n"
+                ));
+
+    }
+    private void playAudio(){
+        String song = JOptionPane.showInputDialog(this, "song");
+        if(song == null || song.trim().isEmpty()) {
+            return;
+        }
+        all.stream()
+                .filter(t -> t.getTitle().equalsIgnoreCase(song))
+                .findFirst()
+                .ifPresentOrElse(t -> {
+                    AudioPlayer pla = new AudioPlayer();
+                    pla.play(t.getFilePath());
+                    outputArea.setText("Playing " + t.getTitle());
+
+                }, () -> {
+                    JOptionPane.showMessageDialog(this, "song not found: " + song);
+                }  );
+
+
+    }
+
+}
