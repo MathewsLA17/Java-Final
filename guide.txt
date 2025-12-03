@@ -2,3 +2,42 @@ This is for the final project to share info.
 
 -If you need to share info, you can use this file to type something out
 -Please, when adding code or any sort of change to code. use comments (//) to communicate what you changed so that we can make sure to work well as a team. 
+
+
+            //System.out.println("10. Print 3 longest tracks audio books and tv shows) spotifyapp
+
+              // case "10":
+                //     System.out.println("\nTop 3 longest items:");
+
+                //     library.stream()
+                //         .sorted((a, b) -> b.getDuration().compareTo(a.getDuration()))
+                //         .limit(3)
+                //         .forEach(t -> System.out.println(
+                //                  t.getTitle() + " | " +
+                //                  t.getDuration().toMinutes() + " mins" spotifyapp
+
+
+                
+    //public Duration duration  AudioBook
+
+
+    
+                //change duration to durationMinutes;
+                int duration = Integer.parseInt(parts[8].trim());
+                //Duration duration = Duration.ofMinutes(durationMinutes);
+
+
+                
+                
+//import java.time.duration
+    // private Duration duration;
+
+
+    
+    // public Duration getDuration(){
+    public int getDuration(){
+    return duration;
+    }
+    // Duration duration;
+    public void setDuration(int duration){
+        this.duration = duration;
