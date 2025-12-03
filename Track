@@ -5,6 +5,7 @@ class Track <T>{
     private int year;
     private int duration;
     private T rating;
+    private String filePath;
 
     public Track (String title, String creator, String album, int year, int duration, T rating){
         this.title = title;
@@ -39,7 +40,7 @@ class Track <T>{
         this.year = year;
     }
     public int getDuration(){
-    return duration;
+        return duration;
     }
     public void setDuration(int duration){
         this.duration = duration;
@@ -49,5 +50,11 @@ class Track <T>{
     }
     public void setRating(T rating){
         this.rating = rating;
+    }
+    public String getFilePath() {
+        return filePath;
+    }
+    public void setFilePath(String path) {
+        this.filePath = path;
     }
 }
