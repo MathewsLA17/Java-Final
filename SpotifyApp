@@ -1,0 +1,30 @@
+import javax.swing.*;
+import java.util.ArrayList;
+
+
+public class SpotifyApp extends SpotifyGui{
+
+
+    public SpotifyApp(ArrayList<Track<String>> all) {
+        super(all);
+    }
+
+    public static void main(String[] args) {
+       ArrayList<Track<String>> all = new ArrayList<>();
+
+       try{
+           Track<String>[] tracks = FileReader.readFile("media_scifi_mixed_tracks.csv");
+           for(Track<String> t : tracks){
+               all.add(t);
+           }
+       }
+        catch(Exception e){
+            System.out.println("Error loading files");
+        }
+
+        SwingUtilities.invokeLater(() -> {
+            SpotifyGui gui = new SpotifyGui(all);
+            gui.setVisible(true);
+        });
+    }
+}
