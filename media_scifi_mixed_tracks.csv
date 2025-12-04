@@ -1,12 +1,12 @@
 Type,Title,Creator,Album,ShowTitle,Year,SeasonNumber,EpisodeNumber,Duration,Rating,filePath
-Track,Time,Pink Floyd,The Dark Side of the Moon,,1973,,,7,4.9,audio/songtest.wav
-Track,Money,Pink Floyd,The Dark Side of the Moon,,1973,,,6,4.8,audio/songtest.wav
-Track,Comfortably Numb,Pink Floyd,The Wall,,1979,,,7,5,audio/songtest.wav
-Track,Stellar Pulse,Orion Vex,Galactic Drift,,2017,,,4,4.8,audio/songtest.wav
-Track,Neon Runner,Synth Astra,Chrome Highway,,2020,,,3,4.2,audio/songtest.wav
-Track,Void Serenade,Cyra Helix,Singularity Dreams,,2016,,,5,3.9,audio/songtest.wav
-Track,Iron Orbit,Eclipse Nova,Steel Cosmos,,2018,,,5,3.7,audio/songtest.wav
-Track,Graviton Kiss,Eclipse Nova,Momentum Field,,2021,,,6,4.3,audio/songtest.wav
+Track,Time,Pink Floyd,The Dark Side of the Moon,,1973,,,7,4.9,audio/time.wav
+Track,Money,Pink Floyd,The Dark Side of the Moon,,1973,,,6,4.8,audio/money.wav
+Track,Comfortably Numb,Pink Floyd,The Wall,,1979,,,7,5,audio/comnum.wav
+Track,walking on sunshine,louisruined,louis,,2017,,,4,4.8,audio/pocketsun.wav
+Track,orange colored sky,louisruined,louis,,2017,,,4,4.8,audio/orangesky.wav
+Track,justgotkicked,louisruined,louis,,2017,,,4,4.8,audio/justgotkicked.wav
+Track,linger,louisruined,louis,,2017,,,4,4.8,audio/linger.wav
+Track,piano man,louisruined,louis,,2017,,,4,4.8,audio/piano.wav
 Track,songtest,Louis Armstrong,hell yeah it is christmas time,,2025,,,4,5,audio/songtest.wav
 AudioBook,The Last Planetfall,Draven Sol,,,2012,,,630,thumb up,audio/songtest.wav
 AudioBook,Chronicles of the Void King,Draven Sol,,,2015,,,720,thumb down,
